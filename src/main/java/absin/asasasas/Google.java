@@ -15,10 +15,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 public class Google {
-	public static void main(String[] args) throws IOException {
-		String q = "when+was+buddha+born";
-		System.out.println(new Google().search(q));
-	}
 
 	public ApiAIResponse search(String q) throws IOException {
 		ApiAIResponse aiResponse = new ApiAIResponse();
@@ -27,8 +23,23 @@ public class Google {
 		Elements elementsByClass = document.getElementsByClass("_Tgc");
 		String response = "";
 		for (Element element : elementsByClass) {
-			System.err.println(element.text());
 			response += element.text();
+		}
+		if (response.length() < 2) {
+			Elements rightHand = document.getElementsByClass("xpdopen");
+			for (Element element : rightHand) {
+				Elements elementsByClass2 = element.getElementsByClass("kno-rdesc");
+				for (Element element2 : elementsByClass2) {
+					response += element2.text();
+				}
+			}
+		}
+		// System.err.println(response);
+		try{
+			response = response.replaceAll("\\(" + ".*" + "\\)", "");
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("String shortening failed!");
 		}
 		JsonArray contextOut = new JsonArray();
 		aiResponse.setContextOut(contextOut);
