@@ -39,7 +39,7 @@ public class Google {
 			response = response.replaceAll("\\(" + ".*" + "\\)", "");
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.err.println("String shortening failed!");
+			System.err.println("Google search string shortening failed!");
 		}
 		JsonArray contextOut = new JsonArray();
 		aiResponse.setContextOut(contextOut);
